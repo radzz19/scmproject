@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .parallax-container {
+            position: relative;
+            height: 100vh;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .about {
+            background-image:url(beach.jpg);
+        }
+
+
+
+        .why-us {
+           background-image: url(beach.jpg);
+             /* Replace with your image URL */
+        }
+        .authour{
+            background-image: url(beach.jpg);
+        }
+
+        .testimonies {
+            background-image: url(beach.jpg); /* Replace with your image URL */
+        }
+
+        .more-about {
+            background-image: url(beach.jpg); /* Replace with your image URL */
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0);
+        }
+
+        .content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-align: center;
+        }
+        .abouth2{
+          font-family: 'Playfair Display SC';
+          font-size: 60px;
+        }
+        .aboutp{
+            font-family: 'Playfair Display SC';
+            font-size: 30px;
+        }
+        .ab2{
+            border-radius: 132px;
+            padding: 15px;
+            font-size:20px ;
+            font-family: 'Playfair Display SC';
+        }
+        .what{
+            font-size:30px ;
+            font-family: 'Playfair Display SC';
+            color: #fff;
+        }
+        .whatp{
+            font-size:25px ;
+            font-family: 'Playfair Display SC';
+            color: #f0e5e5;
+        }
+        .image-container {
+      flex: 1;
+      text-align: center;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    .texbody{
+        flex: 1;
+      background-color: rgb(13, 12, 12,0.4);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 10 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      animation: fadeIn 0.5s;
+      overflow: auto;
+      max-width: 3000px;
+      max-height: 1000px;
+      transition: transform 1s ease-in-out;
+    }
+    .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.1); /* Transparent background */
+            z-index: 1000; /* Ensure it's above other content */
+            transition: background-color 0.3s ease; /* Smooth transition effect */
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px; /* Increased gap for extra spacing */
+            margin-right: 20px; /* Adjusted margin for better spacing */
+        }
+
+        .nav-links li a {
+            color: rgb(255, 255, 255);
+            text-decoration: none;
+            padding: 10px;
+            font-size: large; /* Added padding for better clickable area */
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8); /* Background color */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px; /* Rounded corners */
+            padding: 8px 0; /* Add padding for better appearance */
+        }
+
+        .dropdown-content a {
+            color: rgb(226, 221, 221);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: black;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#author-video {
+    min-width: 100%;
+    min-height: 100%;
+}
+
+        
+
+
+    </style>
+    <title>main</title>
+</head>
+<body>
+
+
+    <div class="header">
+        <div class="header-inner">
+            <ul class="nav-links">
+                <li><a href="login7.html">Login</a></li>
+                <li><a href="codemain.html">Home</a></li>
+                
+                </div>
+            </ul>
+            
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="parallax-container about">
+        <div class="overlay"></div>
+        <div class="content">
+            <h2 class="abouth2">INSPIRE ME NOW</h2>
+            <p class="aboutp">Embark on journey of wisdom</p>
+           <a href="codemain.html"> <button class="ab2">Start now </button></a>
+        </div>
+    </div>
+   
+    <!-- Why Us Section -->
+    <div class="parallax-container why-us">
+        <div class="overlay"></div>
+        <div class="content">
+            <div class="texbody">
+            <h1 class="what">What is Inspire me now</h1>
+            <p class="whatp">🌟Welcome to Inspire Me Now🌟<br>
+                <br>
+        
+                At Inspire Me Now, we believe in the transformative power of words. Our platform is dedicated to delivering a carefully curated collection of quotes from a diverse range of thinkers, leaders, and visionaries. These words are designed to uplift, motivate, and spark positive change in your life.
+                
+                Whether you're facing challenges, pursuing your goals, or simply seeking a daily boost of positivity, Inspire Me Now is here for you. Explore our collection of inspirational quotes that cover various aspects of life, from success and courage to happiness and resilience.
+                
+                Ready to be inspired? Click the "Inspire Me" button to receive a randomly selected quote that might just be the motivation you need today.
+                
+                Join us on this journey of inspiration, empowerment, and positive transformation. Let the words guide you towards a more inspired and fulfilling life.</h2>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+  
+
+    <script>
+        // Optional: Add smooth scrolling for better user experience
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+
+     
+    </script>
+
+</body>
+</html>
