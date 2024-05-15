@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <style>
+        /* Styles for the blurred image */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url(bac3.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Navigation bar styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.1); /* Transparent background */
+            z-index: 1000; /* Ensure it's above other content */
+            transition: background-color 0.3s ease; /* Smooth transition effect */
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            color: white;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px; /* Increased gap for extra spacing */
+            margin-right: 20px; /* Adjusted margin for better spacing */
+        }
+
+        .nav-links li a {
+            color: rgb(18, 17, 17);
+            text-decoration: none;
+            padding: 10px; /* Added padding for better clickable area */
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8); /* Background color */
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px; /* Rounded corners */
+            padding: 8px 0; /* Add padding for better appearance */
+        }
+
+        .dropdown-content li a {
+            color: rgb(226, 221, 221);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content li a:hover {
+            background-color: #f1f1f1;
+            color: black;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        #quoteSearch {
+            width: 50%; /* Increased width of search bar */
+            padding: 10px;
+            margin-right: 20px;
+            background-color: rgba(198, 188, 188, 0.4);
+            border: none;
+            border-radius: 20px; 
+            /* Adjusted border-radius for better appearance */
+        }
+
+        .search-icon {
+            fill: #555; /* Color of the search icon */
+            width: 20px; /* Size of the icon */
+            height: 20px;
+            position: absolute;
+            left: 10px; /* Adjusted position for better alignment */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Center vertically */
+        }
+
+        h1 {
+            font-family: 'Playfair Display SC';
+            text-align: center;
+            color: #000000;
+            margin-top: 20px; /* Adjusted margin for the title */
+        }
+
+        /* Styles for the favorite quotes */
+        .container-quotes {
+            max-width: 800px;
+            margin: 20px auto; /* Adjusted margin for better placement */
+            text-align: center;
+            overflow-y: auto; /* Add this line to enable vertical scrolling */
+            max-height: 511px;
+            scrollbar-width: none; /* Hide scrollbar for Firefox */
+            -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+        }
+
+        .container-quotes::-webkit-scrollbar {
+            display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+        }
+
+        .quote {
+            background-color: rgba(208, 204, 204, 0.5);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+            padding: 20px;
+        }
+
+        blockquote {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #0f0e0e;
+        }
+
+        cite {
+            display: block;
+            margin-top: 10px;
+            font-style: italic;
+            color: #434141;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <ul class="nav-links">
+            <li><a href="index.html">Login</a></li>
+            <li><a href="codemain.html">Home</a></li>
+            <div class="dropdown">
+                <li class="dropbtn" style="color: #000000;">Quote Type</li>
+                <div class="dropdown-content" id="quoteTypeDropdown">
+                    <li><a id="motivational" href="#">Motivational</a></li>
+                    <li><a id="poetic" href="#">Poetic</a></li>
+                    <li><a id="social" href="#">Social</a></li>
+                    <li><a id="all" href="#">All</a></li>
+                </div>
+            </div>
+        </ul>
+        <div style="position: relative; width: 70%;">
+            <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.5 13h-.79l-.28-.27A6.471 6.471 0 0 0 16 7.5 6.5 6.5 0 1 0 9.5 14c1.61 0 3.08-.59 4.23-1.57l.27.28v.79l5 4.99L19.49 18l-4.99-5zm-5 0C7.01 13 5 10.99 5 8.5S7.01 4 9.5 4 14 6.01 14 8.5 11.99 13 9.5 13z"/>
+            </svg>
+            <input type="text" id="quoteSearch" placeholder="Search quotes" style="padding-left: 30px;">
+        </div>
+    </div>
+</div>
+
+<h1 style="margin-top: 120px;">Quotes Quest</h1>
+
+<!-- Favorite Quotes Section -->
+<div class="container-quotes">
+    <!-- Quotes will be dynamically added here -->
+</div>
+
+<script>
+    const motivational = [
+    { quote: "You must do the thing you think you cannot do.", cite: "Eleanor Roosevelt" },
+    { quote: "The future belongs to those who believe in the beauty of their dreams.", cite: "Eleanor Roosevelt" },
+    { quote: "No one can make you feel inferior without your consent.", cite: "Eleanor Roosevelt" },
+    { quote: "Great minds discuss ideas; average minds discuss events; small minds discuss people.", cite: "Eleanor Roosevelt" },
+    { quote: "Happiness is not a goal; it is a by-product.", cite: "Eleanor Roosevelt" },
+    { quote: "The only thing we have to fear is fear itself.", cite: "Eleanor Roosevelt" },
+    { quote: "Friendship with oneself is all-important because without it, one cannot be friends with anyone else.", cite: "Eleanor Roosevelt" },
+    { quote: "You gain strength, courage, and confidence by every experience in which you really stop to look fear in the face.", cite: "Eleanor Roosevelt" },
+    { quote: "A woman is like a tea bag you never know how strong she is until she gets in hot water.", cite: "Eleanor Roosevelt" },
+    { quote: "The purpose of life is to live it, to taste experience to the utmost, to reach out eagerly and without fear for newer and richer experience.", cite: "Eleanor Roosevelt" },
+    { quote: "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do.", cite: "Steve Jobs" },
+    { quote: "Innovation distinguishes between a leader and a follower.", cite: "Steve Jobs" },
+    { quote: "Remembering that you are going to die is the best way I know to avoid the trap of thinking you have something to lose. You are already naked. There is no reason not to follow your heart.", cite: "Steve Jobs" },
+    { quote: "Stay hungry, stay foolish.", cite: "Steve Jobs" },
+    { quote: "Your time is limited, so don't waste it living someone else's life.", cite: "Steve Jobs" },
+    { quote: "The people who are crazy enough to think they can change the world are the ones who do.", cite: "Steve Jobs" },
+    { quote: "Design is not just what it looks like and feels like. Design is how it works.", cite: "Steve Jobs" },
+    { quote: "I want to put a ding in the universe.", cite: "Steve Jobs" },
+    { quote: "Innovation comes from people meeting up in the hallways or calling each other at 10:30 at night with a new idea, or because they realized something that shoots holes in how we've been thinking about a problem.", cite: "Steve Jobs" },
+    { quote: "The people who are doing the work are the moving force behind the Macintosh. My job is to create a space for them, to clear out the rest of the organization and keep it at bay.", cite: "Steve Jobs" },
+    { quote: "The first and greatest victory is to conquer yourself.", cite: "Plato" },
+    { quote: "At the touch of love, everyone becomes a poet.", cite: "Plato" },
+    { quote: "Ignorance, the root and stem of all evil.", cite: "Plato" },
+    { quote: "One of the penalties for refusing to participate in politics is that you end up being governed by your inferiors.", cite: "Plato" },
+    { quote: "Wise men speak because they have something to say; fools because they have to say something.", cite: "Plato" },
+    { quote: "Courage is knowing what not to fear.", cite: "Plato" },
+    { quote: "Justice means minding your own business and not meddling with other men's concerns.", cite: "Plato" },
+    { quote: "The heaviest penalty for declining to rule is to be ruled by someone inferior to yourself.", cite: "Plato" },
+    { quote: "An empty vessel makes the loudest sound, so they that have the least wit are the greatest babblers.", cite: "Plato" },
+    { quote: "The measure of a man is what he does with power.", cite: "Plato" },
+    { quote: "The direction in which education starts a man will determine his future in life.", cite: "Plato" },
+    { quote: "At the touch of love, everyone becomes a poet.", cite: "Plato" },
+    { quote: "The just man is happy, and the unjust man is miserable.", cite: "Plato" },
+    { quote: "Philosophy begins in wonder.", cite: "Plato" },
+    { quote: "Beauty of style and harmony and grace and good rhythm depend on simplicity.", cite: "Plato" },
+    { quote: "Float like a butterfly, sting like a bee.", cite: "Muhammad Ali" },
+    { quote: "I'm not the greatest, I'm the double greatest. Not only do I knock 'em out, I pick the round.", cite: "Muhammad Ali" },
+    { quote: "Service to others is the rent you pay for your room here on Earth.", cite: "Muhammad Ali" },
+    { quote: "It's hard to be humble when you're as great as I am.", cite: "Muhammad Ali" },
+    { quote: "I hated every minute of training, but I said, 'Don't quit. Suffer now and live the rest of your life as a champion.'", cite: "Muhammad Ali" },
+    { quote: "I am the greatest. I said that even before I knew I was.", cite: "Muhammad Ali" },
+    { quote: "I'm so fast that last night I turned off the light switch in my hotel room and was in bed before the room was dark.", cite: "Muhammad Ali" },
+    { quote: "Don't count the days; make the days count.", cite: "Muhammad Ali" },
+    { quote: "Impossible is just a big word thrown around by small men who find it easier to live in the world they've been given than to explore the power they have to change it.", cite: "Muhammad Ali" },
+    { quote: "He who is not courageous enough to take risks will accomplish nothing in life.", cite: "Muhammad Ali" },
+    { quote: "Live every day as if it were your last because someday you're going to be right.", cite: "Muhammad Ali" },
+    { quote: "It isn't the mountains ahead to climb that wear you out; it's the pebble in your shoe.", cite: "Muhammad Ali" },
+    { quote: "I have a dream that one day this nation will rise up and live out the true meaning of its creed: 'We hold these truths to be self-evident, that all men are created equal.'", cite: "Martin Luther King Jr." },
+    { quote: "Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that.", cite: "Martin Luther King Jr." },
+    { quote: "Injustice anywhere is a threat to justice everywhere.", cite: "Martin Luther King Jr." },
+    { quote: "The time is always right to do what is right.", cite: "Martin Luther King Jr." },
+    { quote: "We must accept finite disappointment, but never lose infinite hope.", cite: "Martin Luther King Jr." },
+    { quote: "The ultimate measure of a man is not where he stands in moments of comfort and convenience, but where he stands at times of challenge and controversy.", cite: "Martin Luther King Jr." },
+    { quote: "I believe that unarmed truth and unconditional love will have the final word in reality. This is why right, temporarily defeated, is stronger than evil triumphant.", cite: "Martin Luther King Jr." },
+    { quote: "Our lives begin to end the day we become silent about things that matter.", cite: "Martin Luther King Jr." },
+    { quote: "The arc of the moral universe is long, but it bends toward justice.", cite: "Martin Luther King Jr." },
+    { quote: "Faith is taking the first step even when you don't see the whole staircase.", cite: "Martin Luther King Jr." },
+    { quote: "The ultimate tragedy is not the oppression and cruelty by the bad people but the silence over that by the good people.", cite: "Martin Luther King Jr." },
+    { quote: "Let no man pull you so low as to hate him.", cite: "Martin Luther King Jr." },
+    { quote: "The biggest risk is not taking any risk. In a world that's changing quickly, the only strategy that is guaranteed to fail is not taking risks.", cite: "Mark Zuckerberg" },
+    { quote: "The question I ask myself like almost every day is, 'Am I doing the most important thing I could be doing?'", cite: "Mark Zuckerberg" },
+    { quote: "People can be really smart or have skills that are directly applicable, but if they don't really believe in it, then they are not going to really work hard.", cite: "Mark Zuckerberg" },
+    { quote: "The Hacker Way is an approach to building that involves continuous improvement and iteration.", cite: "Mark Zuckerberg" },
+    { quote: "The thing that we are trying to do at Facebook is just help people connect and communicate more efficiently.", cite: "Mark Zuckerberg" },
+    { quote: "By giving people the power to share, we're making the world more transparent.", cite: "Mark Zuckerberg" },
+    { quote: "The companies that work are the ones that people really care about and have a vision for the world, so do something you like.", cite: "Mark Zuckerberg" },
+    { quote: "Move fast and break things. Unless you are breaking stuff, you are not moving fast enough.", cite: "Mark Zuckerberg" },
+    { quote: "We don't build services to make money; we make money to build better services.", cite: "Mark Zuckerberg" },
+    { quote: "Simply put: we don't build services to make money; we make money to build better services.", cite: "Mark Zuckerberg" },
+    { quote: "When something is important enough, you do it even if the odds are not in your favor.", cite: "Elon Musk" },
+    { quote: "Patience is a virtue, and I'm learning patience. It's a tough lesson.", cite: "Elon Musk" },
+    { quote: "I think it is possible for ordinary people to choose to be extraordinary.", cite: "Elon Musk" },
+    { quote: "I could either watch it happen or be a part of it.", cite: "Elon Musk" },
+    { quote: "If you get up in the morning and think the future is going to be better, it is a bright day. Otherwise, it's not.", cite: "Elon Musk" },
+    { quote: "It's OK to have your eggs in one basket as long as you control what happens to that basket.", cite: "Elon Musk" },
+    { quote: "The first step is to establish that something is possible; then, probability will occur.", cite: "Elon Musk" },
+    { quote: "Failure is an option here. If things are not failing, you are not innovating enough.", cite: "Elon Musk" },
+    { quote: "When I was in college, I wanted to be involved in things that would change the world.", cite: "Elon Musk" },
+    { quote: "I'm interested in things that change the world or that affect the future and wondrous, new technology where you see it, and you're like, 'Wow, how did that even happen? How is that possible?'", cite: "Elon Musk" },
+    { quote: "Imagination is more important than knowledge. For knowledge is limited, whereas imagination embraces the entire world, stimulating progress, giving birth to evolution.", cite: "Albert Einstein" },
+    { quote: "The only source of knowledge is experience.", cite: "Albert Einstein" },
+    { quote: "Life is like riding a bicycle. To keep your balance, you must keep moving.", cite: "Albert Einstein" },
+    { quote: "Strive not to be a success, but rather to be of value.", cite: "Albert Einstein" },
+    { quote: "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.", cite: "Albert Einstein" },
+    { quote: "Education is what remains after one has forgotten what one has learned in school.", cite: "Albert Einstein" },
+    { quote: "Logic will get you from A to B. Imagination will take you everywhere.", cite: "Albert Einstein" },
+    { quote: "The only thing that interferes with my learning is my education.", cite: "Albert Einstein" },
+    { quote: "Anyone who has never made a mistake has never tried anything new.", cite: "Albert Einstein" },
+    { quote: "Life is like riding a bicycle. To keep your balance, you must keep moving.", cite: "Albert Einstein" },
+    { quote: "The true sign of intelligence is not knowledge but imagination.", cite: "Albert Einstein" },
+    { quote: "If you want to live a happy life, tie it to a goal, not to people or things.", cite: "Albert Einstein" },
+    { quote: "The more you praise and celebrate your life, the more there is in life to celebrate.", cite: "Oprah Winfrey" },
+    { quote: "Doing the best at this moment puts you in the best place for the next moment.", cite: "Oprah Winfrey" },
+    { quote: "You can have it all. Just not all at once.", cite: "Oprah Winfrey" },
+    { quote: "Think like a queen. A queen is not afraid to fail. Failure is another steppingstone to greatness.", cite: "Oprah Winfrey" }
+    ];
+
+    const poetic = [
+    { quote: "The moon in her chariot of pearl.", cite: "" },
+    { quote: "A thing of beauty is a joy forever.", cite: "" },
+    { quote: "To see a World in a Grain of Sand, And a Heaven in a Wild Flower, Hold Infinity in the palm of your hand, And Eternity in an hour.", cite: "" },
+    { quote: "The poetry of the earth is never dead.", cite: "" },
+    { quote: "The stars, like dust, encircle me In living mists of light.", cite: "" },
+    { quote: "She walks in beauty, like the night Of cloudless climes and starry skies.", cite: "" },
+    { quote: "Hope is the thing with feathers That perches in the soul And sings the tune without the words And never stops at all.", cite: "" },
+    { quote: "Do I dare disturb the universe?", cite: "" },
+    { quote: "And the night shall be filled with music, And the cares that infest the day Shall fold their tents like the Arabs And as silently steal away.", cite: "" },
+    { quote: "I wandered lonely as a cloud That floats on high o'er vales and hills, When all at once I saw a crowd, A host, of golden daffodils.", cite: "" },
+    { quote: "Shall I compare thee to a summer's day? Thou art more lovely and more temperate.", cite: "" },
+    { quote: "Not all those who wander are lost.", cite: "" },
+    { quote: "Love is an endless mystery, for it has nothing else to explain it.", cite: "" },
+    { quote: "The world is full of magic things, patiently waiting for our senses to grow sharper.", cite: "" },
+    { quote: "The poetry of the earth is never dead.", cite: "" },
+    { quote: "Shall I compare thee to a summer's day? Thou art more lovely and more temperate.", cite: "" },
+    { quote: "Not all those who wander are lost.", cite: "" },
+    { quote: "Love is an endless mystery, for it has nothing else to explain it.", cite: "" },
+    { quote: "The world is full of magic things, patiently waiting for our senses to grow sharper.", cite: "" },
+    { quote: "The poetry of the earth is never dead.", cite: "" },
+    { quote: "For every dark night, there's a brighter day.", cite: "" },
+    { quote: "And all I loved, I loved alone.", cite: "" },
+    { quote: "The best way out is always through.", cite: "" },
+    { quote: "Earth has no sorrow that earth can not heal.", cite: "" },
+    { quote: "The flower that follows the sun does so even in cloudy days.", cite: "" },
+    { quote: "I am not a teacher, but an awakener.", cite: "" },
+    { quote: "It is not in the stars to hold our destiny but in ourselves.", cite: "" },
+    { quote: "Love the world as your own self; then you can truly care for all things.", cite: "" },
+    { quote: "The sun is a daily reminder that we too can rise again from the darkness, that we too can shine our own light.", cite: "" }
+];
+const social = [
+    { quote: "Injustice anywhere is a threat to justice everywhere.", cite: "Martin Luther King Jr." },
+    { quote: "Darkness cannot drive out darkness; only light can do that. Hate cannot drive out hate; only love can do that.", cite: "Martin Luther King Jr." },
+    { quote: "The time is always right to do what is right.", cite: "Martin Luther King Jr." },
+    { quote: "Our lives begin to end the day we become silent about things that matter.", cite: "Martin Luther King Jr." },
+    { quote: "I have decided to stick to love... Hate is too great a burden to bear.", cite: "Martin Luther King Jr." },
+    { quote: "The ultimate measure of a man is not where he stands in moments of comfort and convenience, but where he stands at times of challenge and controversy.", cite: "Martin Luther King Jr." },
+    { quote: "Freedom is never voluntarily given by the oppressor; it must be demanded by the oppressed.", cite: "Martin Luther King Jr." },
+    { quote: "Change does not roll in on the wheels of inevitability, but comes through continuous struggle.", cite: "Martin Luther King Jr." },
+    { quote: "We may have all come on different ships, but we're in the same boat now.", cite: "Martin Luther King Jr." },
+    { quote: "In the end, we will remember not the words of our enemies, but the silence of our friends.", cite: "Martin Luther King Jr." },
+    { quote: "For to be free is not merely to cast off one's chains, but to live in a way that respects and enhances the freedom of others.", cite: "Nelson Mandela" },
+    { quote: "Education is the most powerful weapon which you can use to change the world.", cite: "Nelson Mandela" },
+    { quote: "No one is born hating another person because of the color of his skin, or his background, or his religion. People must learn to hate, and if they can learn to hate, they can be taught to love.", cite: "Nelson Mandela" },
+    { quote: "It always seems impossible until it's done.", cite: "Nelson Mandela" },
+    { quote: "To deny people their human rights is to challenge their very humanity.", cite: "Nelson Mandela" },
+    { quote: "There is no passion to be found playing small—in settling for a life that is less than the one you are capable of living.", cite: "Nelson Mandela" },
+    { quote: "I learned that courage was not the absence of fear, but the triumph over it. The brave man is not he who does not feel afraid, but he who conquers that fear.", cite: "Nelson Mandela" },
+    { quote: "A good head and a good heart are always a formidable combination.", cite: "Nelson Mandela" },
+    { quote: "Justice will not be served until those who are unaffected are as outraged as those who are.", cite: "Benjamin Franklin" },
+    { quote: "The day we stop fighting for democracy is the day we lose it.", cite: "Queen Rania of Jordan" },
+    { quote: "The moral arc of the universe bends at the elbow of justice.", cite: "Martin Luther King Jr." },
+    { quote: "The greatest glory in living lies not in never falling, but in rising every time we fall.", cite: "Nelson Mandela" },
+    { quote: "Our lives begin to end the day we become silent about things that matter.", cite: "Martin Luther King Jr." },
+    { quote: "An eye for an eye only ends up making the whole world blind.", cite: "Mahatma Gandhi" },
+    { quote: "You may choose to look the other way but you can never say again that you did not know.", cite: "William Wilberforce" },
+    { quote: "The only limit to our realization of tomorrow will be our doubts of today.", cite: "Franklin D. Roosevelt" },
+    { quote: "Do not wait for leaders; do it alone, person to person.", cite: "Mother Teresa" },
+    { quote: "The ultimate tragedy is not the oppression and cruelty by the bad people but the silence over that by the good people.", cite: "Martin Luther King Jr." },
+    { quote: "Our lives matter. Black lives matter. No more racism.", cite: "Unknown" }
+    ];
+
+    
+    
+
+    // Combine all quotes into one array
+    const allQuotes = motivational.concat(poetic, social);
+
+    // Get the container div
+    var quoteContainer = document.querySelector('.container-quotes');
+    var currentQuotesArray = allQuotes; // Default to all quotes
+
+    function displayQuotes(quotesArray) {
+        quoteContainer.innerHTML = ''; // Clear previous quotes
+
+        quotesArray.forEach(function (quoteObj) {
+            var quoteDiv = document.createElement('div');
+            quoteDiv.className = 'quote';
+
+            var blockquote = document.createElement('blockquote');
+            blockquote.innerHTML = '"' + quoteObj.quote + '"<br><cite>- ' + quoteObj.cite + '</cite>';
+
+            quoteDiv.appendChild(blockquote);
+            quoteContainer.appendChild(quoteDiv);
+        });
+    }
+
+    displayQuotes(allQuotes); // Initially display all quotes
+
+    // JavaScript for search and filter
+    document.getElementById('quoteSearch').addEventListener('input', function () {
+        var searchValue = this.value.toLowerCase();
+
+        // Loop through each quote and hide/show based on the search value
+        var quotes = document.querySelectorAll('.quote');
+        quotes.forEach(function (quote) {
+            var quoteText = quote.textContent || quote.innerText;
+            if (quoteText.toLowerCase().indexOf(searchValue) > -1) {
+                quote.style.display = '';
+            } else {
+                quote.style.display = 'none';
+            }
+        });
+    });
+
+    // Change quotes array based on selection
+    document.getElementById('quoteTypeDropdown').addEventListener('click', function (event) {
+        var selectedType = event.target.id;
+        switch (selectedType) {
+            case 'all':
+                currentQuotesArray = allQuotes;
+                break;
+            case 'motivational':
+                currentQuotesArray = motivational;
+                break;
+            case 'poetic':
+                currentQuotesArray = poetic;
+                break;
+            case 'social':
+                currentQuotesArray = social;
+                break;
+        }
+        displayQuotes(currentQuotesArray);
+    });
+</script>
+
+</body>
+</html>
